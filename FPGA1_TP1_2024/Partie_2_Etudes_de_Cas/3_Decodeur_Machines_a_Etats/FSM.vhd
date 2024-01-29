@@ -102,30 +102,37 @@ begin
 			-- On Reste dans Cet Etat Tant que Mode est à 00
 			-- Si Mode Passe à 10, On Passe en LEDs Clignotement
 			-- Si Mode Passe à 11, On Passe en LEDs Allumées
-			when LED_OFF	=> if Mode = "10" then EF <= CLIGN_OFF;
-									elsif Mode = "11" then EF <= LED_ON;
-									end if;
+			when LED_OFF	=> EF<= EP;
+			                   LED <= "0000";
+			                   if Mode = "10" or  Mode = "01" then EF <= CLIGN_OFF;
+							   elsif Mode = "11" then EF <= LED_ON;
+							   end if;
 									
 			-- LEDs Clignotement - (Eteint)
 			-- Le Compteur Compte Jusqu'au Seuil puis on Passe à l'Etat Suivant
-			when CLIGN_OFF	=> if Mode = "00" then EF <= LED_OFF;
-									elsif Mode = "11" then EF <= LED_ON;
-									end if;
-									if Cpt = Seuil then EF <= LED_ON;
-									end if;
+			when CLIGN_OFF	=>  LED <= "0000";
+			                    EF<= EP;
+			                    if Mode = "00" then EF <= LED_OFF;
+			                    end if;
+                                if Mode = "11" then EF <= LED_ON;
+                                end if;
+                                if Cpt = Seuil then EF <= LED_ON;
+                                end if;
 									
 			-- LEDs Allumées
 			-- On Reste dans Cet Etat Tant que Mode est à 11
 			-- Si Mode Passe à 10, On Passe en LEDs Clignotement
 			-- Si Mode Passe à 00, On Passe en LEDs Eteintes
 			when LED_ON		=> LED <= "1111";
-									if Mode = "10" then EF <= CLIGN_ON;
+			                        EF<= EP;
+									if  Mode = "10" or  Mode = "01"  then EF <= CLIGN_ON;
 									elsif Mode = "00" then EF <= LED_OFF;
 									end if;
 	
 			-- LEDs Clignotement - (Allumé)
 			-- Le Compteur Compte Jusqu'au Seuil puis on Passe à l'Etat Suivant
 			when CLIGN_ON	=> LED <= "1111";
+			                        EF<= EP;
 									if Mode = "00" then EF <= LED_OFF;
 									elsif Mode = "11" then EF <= LED_ON;
 									end if;

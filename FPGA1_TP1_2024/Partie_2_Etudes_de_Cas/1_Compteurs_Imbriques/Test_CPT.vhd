@@ -26,7 +26,7 @@ end Test_CPT;
 
 architecture Behavioral of Test_CPT is
 
-signal Cpt: integer range 0 to 20000000;		-- Compteur Modulo N
+signal Cpt: integer range 0 to 200000000;		-- Compteur Modulo N
 signal CPT2: std_logic_vector(27 downto 0); 	-- Compteur sur 27 bits
 signal start : std_logic;							-- Commande Incrementation CPT2
 

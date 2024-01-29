@@ -70,8 +70,7 @@ begin
 					when "01" => Limit <= X"96E3600";		-- 24 000 000 en Décimal
 					when "10" => Limit <= X"87A1200";		-- 8 000 000 en Décomal
 					when "11" => Limit <= (others => '1');	
-	
-					-- when others => NULL; -- RETIRER LE COMMENTAIRE POUR CORRIGER L'ERREUR
+					when others => Limit <=(others => '0'); -- RETIRER LE COMMENTAIRE POUR CORRIGER L'ERREUR
 	
 				end case;
 			end if;
@@ -82,10 +81,10 @@ begin
 	--------------------------
 	-- Commande du Decodeur --
 	--------------------------
-	Decode <= 		"11" when Sup='1'		-- Si Count > 9 		 --> Decode = 11
-				 else	"10" when Count > 5	-- Si Count = 6,7,8,9 --> Decode = 10
-				 else "01" when Count > 2;	-- Si Count = 3,4,5   --> Decode = 01
-											-- Si Count = 0,1,2   --> Decode = 00
+	Decode <= 	      "11" when Sup='1'		-- Si Count > 9 		 --> Decode = 11
+				 else "10" when Count > 5	-- Si Count = 6,7,8,9 --> Decode = 10
+				 else "01" when Count > 2	-- Si Count = 3,4,5   --> Decode = 01
+				 else "00" when count < 3;					-- Si Count = 0,1,2   --> Decode = 00
 	
 end Behavioral;
 
