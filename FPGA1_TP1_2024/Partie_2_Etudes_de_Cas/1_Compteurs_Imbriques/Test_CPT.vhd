@@ -9,7 +9,7 @@
 
 -- XDC File:			Test_CPT.xdc					
 
--- Description: Compteurs ImbriquÈs - Version KO
+-- Description: Compteurs Imbriqu√©s - Version KO
 --
 ----------------------------------------------------------------------------------
 library IEEE;
@@ -26,7 +26,7 @@ end Test_CPT;
 
 architecture Behavioral of Test_CPT is
 
-signal Cpt: integer range 0 to 200000000;		-- Compteur Modulo N
+signal Cpt: integer range 0 to 20000000;		-- Compteur Modulo N
 signal CPT2: std_logic_vector(27 downto 0); 	-- Compteur sur 27 bits
 signal start : std_logic;							-- Commande Incrementation CPT2
 
@@ -45,10 +45,10 @@ begin
 		-- Au Front d'Horloge...
 		elsif rising_edge(Clk) then
 	
-			Cpt <= Cpt + 1;	-- IncrÈmentation CPT
+			Cpt <= Cpt + 1;	-- Incr√©mentation CPT
 		
-			-- Si on Arrive ‡ la Valeur Limite
-			if Cpt = 70000000 then 
+			-- Si on Arrive √† la Valeur Limite
+			if Cpt = 19999999 then 
 				start <= not start; 	-- On Inverse le Niveau de Start
 				Cpt <= 0; 				-- RAZ Synchrone de CPT
 			end if;
@@ -70,7 +70,7 @@ begin
 		-- Au Front d'Horloge...
 		elsif rising_edge(Clk) then
 	
-			-- IncrÈmentation de CPT2 sur Start
+			-- Incr√©mentation de CPT2 sur Start
 			if start = '1' then 
 				Cpt2 <= Cpt2 + 1;
 			end if;
@@ -81,8 +81,8 @@ begin
 	------------------
 	-- Gestion LED--
 	------------------
-		-- Bouton Rel‚chÈ --> Affichage des 4 MSB de CPT2
-		-- Bouton AppuyÈ  --> Les 4 LED sont AllumÈes
+		-- Bouton Rel√¢ch√© --> Affichage des 4 MSB de CPT2
+		-- Bouton Appuy√©  --> Les 4 LED sont Allum√©es
 	
 	LED <= Cpt2(27 downto 24) when Button_L='0'
 			else "1111";
